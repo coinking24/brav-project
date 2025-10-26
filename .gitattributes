@@ -1,0 +1,6 @@
+*.jpg  -text
+*.jpeg -text
+*.png  -text
+*.gif  -text
+*.webp -text
+*.svg  text eol=lf
