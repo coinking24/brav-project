@@ -26,6 +26,13 @@ a {
     text-decoration: none;
 }
 
+/* ✅ 전역 이미지 왜곡 방지 (추가) */
+img {
+    max-width: 100%;
+    height: auto;      /* 비율 유지 */
+    display: block;    /* 인라인 간격/레인 보정 */
+}
+
 /* --------------------
    전체 레이아웃
    -------------------- */
@@ -220,6 +227,7 @@ footer {
     align-items: center; 
 }
 
+/* ✅ 메인 이미지 보강 (display 추가) */
 .product-main-image {
     max-width: 100%;
     height: auto;
@@ -227,6 +235,7 @@ footer {
     object-fit: contain;
     transition: opacity 0.3s ease; 
     margin-bottom: 15px; 
+    display: block; /* 인라인 간격/정렬 이슈 방지 */
 }
 
 .product-info-wrapper {
