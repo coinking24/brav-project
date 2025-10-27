@@ -202,6 +202,13 @@ footer {
     100%  { opacity: 0; }
 }
 
+/* (추가) 메인화면 펜 이미지 크기 축소 */
+.page-home .slide.slide-pen {
+    max-width: 30vw; /* 기본 45vw보다 작게 */
+    max-height: 60vh; /* 기본 80vh보다 작게 */
+}
+
+
 /* --------------------
    6. 상품 페이지 스타일 (okay, keep, with 공통)
    -------------------- */
@@ -430,10 +437,9 @@ footer {
 .gift-message-controls {
     display: flex; 
     align-items: center; 
-    margin-bottom: 8px; 
 }
 
-.gift-message label {
+.gift-message-controls label {
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
@@ -444,13 +450,23 @@ footer {
     flex-shrink: 0; 
 }
 
-.gift-message-select {
+.gift-card-select {
     padding: 3px 6px; 
     font-size: 12px; 
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
     max-width: 150px; 
+}
+
+.gift-message-textarea-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #555;
+    display: block;
+    margin-bottom: 8px; 
+    margin-top: 15px; 
 }
 
 .gift-message textarea {

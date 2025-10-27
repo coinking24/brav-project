@@ -3,7 +3,7 @@ if (document.body.classList.contains('page-okay')) {
     const productImage = document.getElementById('productImage');
     const colorSwatches = document.querySelectorAll('.page-okay .color-swatches .swatch'); 
     const colorSelect = document.getElementById('color-select');
-    const giftSelect = document.getElementById('gift-message-select-okay'); 
+    const giftSelect = document.getElementById('gift-card-select-okay'); 
     const giftText = document.getElementById('gift-message-text-okay'); 
 
     if (productImage && colorSwatches.length > 0 && colorSelect && giftSelect && giftText) { 
@@ -30,10 +30,10 @@ if (document.body.classList.contains('page-okay')) {
             });
         });
 
-        // 선물 메시지 선택
+        // (수정) 기프트 카드 선택 (textarea 자동 입력 기능 제거)
         giftSelect.addEventListener('change', (event) => {
             if (event.target.value) { 
-                giftText.value = event.target.value; 
+                // giftText.value = event.target.value; // (수정) 이 줄을 주석 처리
             }
         });
     }
@@ -49,7 +49,7 @@ if (document.body.classList.contains('page-keep')) {
     const colorSelectKeep = document.getElementById('color-select-keep');
     const productInfoWrapper = document.querySelector('.page-keep .product-info-wrapper'); 
     const productImageWrapper = document.querySelector('.page-keep .product-image-wrapper'); 
-    const giftSelectKeep = document.getElementById('gift-message-select-keep'); 
+    const giftSelectKeep = document.getElementById('gift-card-select-keep'); 
     const giftTextKeep = document.getElementById('gift-message-text-keep'); 
 
     let currentKeepType = 'notebook'; 
@@ -117,10 +117,10 @@ if (document.body.classList.contains('page-keep')) {
             }
         });
 
-        // 선물 메시지 선택
+        // (수정) 기프트 카드 선택 (textarea 자동 입력 기능 제거)
         giftSelectKeep.addEventListener('change', (event) => {
             if (event.target.value) { 
-                giftTextKeep.value = event.target.value; 
+                // giftTextKeep.value = event.target.value; // (수정) 이 줄을 주석 처리
             }
         });
 
@@ -135,14 +135,14 @@ if (document.body.classList.contains('page-keep')) {
 
 // with.html 페이지 스크립트
 if (document.body.classList.contains('page-with')) {
-    const giftSelectWith = document.getElementById('gift-message-select-with'); 
+    const giftSelectWith = document.getElementById('gift-card-select-with'); 
     const giftTextWith = document.getElementById('gift-message-text-with'); 
 
     if (giftSelectWith && giftTextWith) {
-        // 선물 메시지 선택
+        // (수정) 기프트 카드 선택 (textarea 자동 입력 기능 제거)
         giftSelectWith.addEventListener('change', (event) => {
             if (event.target.value) { 
-                giftTextWith.value = event.target.value; 
+                // giftTextWith.value = event.target.value; // (수정) 이 줄을 주석 처리
             }
         });
     }
