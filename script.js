@@ -1,45 +1,90 @@
 // okay.html 페이지 스크립트
 if (document.body.classList.contains('page-okay')) { 
-    const productImage = document.getElementById('productImage');
+    const productMainImage = document.getElementById('productMainImage'); 
     const colorSwatches = document.querySelectorAll('.page-okay .color-swatches .swatch'); 
     const colorSelect = document.getElementById('color-select');
     const giftSelect = document.getElementById('gift-card-select-okay'); 
     const giftText = document.getElementById('gift-message-text-okay'); 
+    
+    const leftArrow = document.querySelector('.page-okay .left-arrow');
+    const rightArrow = document.querySelector('.page-okay .right-arrow');
 
-    if (productImage && colorSwatches.length > 0 && colorSelect && giftSelect && giftText) { 
-        // 색상 스와치
+    const imageSets = {
+        black: ['okay3.png', 'okay4.png', 'okay2.png'],
+        white: ['okay(white)3.png', 'okay(white)4.png', 'okay(white)2.png']
+    };
+    
+    let currentImageIndex = 0; 
+    let currentColor = 'black'; 
+
+    function updateProductImage() {
+        if (productMainImage && imageSets[currentColor]) {
+            productMainImage.src = imageSets[currentColor][currentImageIndex];
+            
+            let altText = `Okay Hoodie ${currentColor} `;
+            if (currentImageIndex === 0) altText += 'View 1 (Back)'; // okay3.png
+            else if (currentImageIndex === 1) altText += 'View 2'; // okay4.png
+            else if (currentImageIndex === 2) altText += 'View 3 (Side)'; // okay2.png
+            productMainImage.alt = altText;
+        }
+    }
+
+    if (leftArrow) {
+        leftArrow.addEventListener('click', () => {
+            currentImageIndex--;
+            if (currentImageIndex < 0) {
+                currentImageIndex = imageSets[currentColor].length - 1;
+            }
+            updateProductImage();
+        });
+    }
+
+    if (rightArrow) {
+        rightArrow.addEventListener('click', () => {
+            currentImageIndex++;
+            if (currentImageIndex >= imageSets[currentColor].length) {
+                currentImageIndex = 0;
+            }
+            updateProductImage();
+        });
+    }
+
+    if (colorSwatches.length > 0 && colorSelect) { 
         colorSwatches.forEach(swatch => {
-            swatch.addEventListener('mouseenter', () => {
-                productImage.src = swatch.dataset.image;
+            swatch.addEventListener('click', () => { 
                 colorSwatches.forEach(s => s.classList.remove('active'));
                 swatch.classList.add('active');
-                colorSelect.value = swatch.dataset.colorValue; 
+                
+                currentColor = swatch.dataset.color; 
+                colorSelect.value = currentColor;
+                
+                currentImageIndex = 0; 
+                updateProductImage(); 
             });
         });
 
-        // 색상 드롭다운
         colorSelect.addEventListener('change', (event) => {
-            const selectedColor = event.target.value;
-            const newImage = (selectedColor === 'black') ? 'okay.png' : 'okay(white).png';
-            productImage.src = newImage;
+            currentColor = event.target.value;
             colorSwatches.forEach(s => {
                 s.classList.remove('active');
-                if (s.dataset.colorValue === selectedColor) {
+                if (s.dataset.color === currentColor) { 
                     s.classList.add('active');
                 }
             });
+            
+            currentImageIndex = 0; 
+            updateProductImage(); 
         });
+    }
 
-        // (수정) 기프트 카드 선택 (textarea 자동 입력 기능 제거)
+    if (giftSelect && giftText) {
         giftSelect.addEventListener('change', (event) => {
-            if (event.target.value) { 
-                // giftText.value = event.target.value; // (수정) 이 줄을 주석 처리
-            }
+            // (내용 없음)
         });
     }
 }
 
-// keep.html 페이지 스크립트
+// (✅ 수정) keep.html 페이지 스크립트
 if (document.body.classList.contains('page-keep')) {
     const productImageKeep = document.getElementById('productImageKeep');
     const productNameKeep = document.getElementById('productNameKeep');
@@ -56,7 +101,7 @@ if (document.body.classList.contains('page-keep')) {
 
     if (productImageKeep && productNameKeep && productPriceKeep && typeSwatchesKeep.length > 0 && colorSwatchesKeep.length > 0 && colorSelectKeep && productInfoWrapper && productImageWrapper && giftSelectKeep && giftTextKeep) {
 
-        // 타입 스와치 클릭 이벤트
+        // 타입 스와치 클릭 이벤트 (버그 수정)
         typeSwatchesKeep.forEach(swatch => {
             swatch.addEventListener('click', () => { 
                 currentKeepType = swatch.dataset.type; 
@@ -64,6 +109,9 @@ if (document.body.classList.contains('page-keep')) {
                 typeSwatchesKeep.forEach(s => s.classList.remove('active'));
                 swatch.classList.add('active');
 
+                // (✅ 수정) 이 두 줄이 버그를 수정하는 핵심입니다.
+                // 클릭할 때마다 스와치에 저장된 이름과 가격을 다시 불러옵니다.
+                // (html에서 10,000원으로 수정했기 때문에 10,000원이 로드됨)
                 productNameKeep.textContent = swatch.dataset.name;
                 productPriceKeep.textContent = swatch.dataset.price;
 
@@ -72,7 +120,7 @@ if (document.body.classList.contains('page-keep')) {
                     productInfoWrapper.classList.add('pen-selected');
                     productImageWrapper.classList.add('pen-selected'); 
                 } 
-                else { 
+                else { // 'notebook'을 다시 클릭했을 때
                     productInfoWrapper.classList.remove('pen-selected');
                     productImageWrapper.classList.remove('pen-selected');
                     colorSelectKeep.value = 'white'; 
@@ -117,11 +165,9 @@ if (document.body.classList.contains('page-keep')) {
             }
         });
 
-        // (수정) 기프트 카드 선택 (textarea 자동 입력 기능 제거)
+        // 기프트 카드 선택
         giftSelectKeep.addEventListener('change', (event) => {
-            if (event.target.value) { 
-                // giftTextKeep.value = event.target.value; // (수정) 이 줄을 주석 처리
-            }
+            // (내용 없음)
         });
 
         // 초기 로드 시 노트북 상태로 색상 설정
@@ -139,11 +185,9 @@ if (document.body.classList.contains('page-with')) {
     const giftTextWith = document.getElementById('gift-message-text-with'); 
 
     if (giftSelectWith && giftTextWith) {
-        // (수정) 기프트 카드 선택 (textarea 자동 입력 기능 제거)
+        // 기프트 카드 선택
         giftSelectWith.addEventListener('change', (event) => {
-            if (event.target.value) { 
-                // giftTextWith.value = event.target.value; // (수정) 이 줄을 주석 처리
-            }
+            // (내용 없음)
         });
     }
 }
